@@ -36,11 +36,11 @@ brew tap ipintush/mistype && brew install --cask mistype
 
 ### התקנה ידנית (PKG)
 
-לאחר ההורדה, פתח את קובץ ה-PKG ולך לפי ההוראות:
+לאחר ההורדה, פתחו את קובץ ה-PKG ועקבו אחרי ההוראות:
 
 ![PKG Installer](docs/screenshot-1.png)
 
-אשר את הבקשה לגישה לתיקיית המסמכים ואת אימות ה-Touch ID / סיסמה:
+אשרו את הבקשה לגישה לתיקיית המסמכים ואת אימות ה-Touch ID / סיסמה:
 
 <p float="left">
   <img src="docs/screenshot-3.png" width="300"/>
@@ -51,19 +51,19 @@ brew tap ipintush/mistype && brew install --cask mistype
 
 ![Installation Successful](docs/screenshot-4.png)
 
-במידת הצורך, היכנס להגדרות ← פרטיות ואבטחה ואשר את ההתקנה שם למטה.
+במידת הצורך, היכנסו להגדרות ← פרטיות ואבטחה ואשרו את ההתקנה שם למטה.
 
 ---
 
 ### לאחר ההתקנה
 
-העבר את `Mistype.app` לתיקיית האפליקציות:
+העבירו את `Mistype.app` לתיקיית האפליקציות:
 
 ![Mistype.app](docs/screenshot-5.png)
 
-לאחר הפעלת האפליקציה תראה אייקון מקלדת בשורת האייקונים העליונה. לחיצה עליו מאפשרת לשנות את קיצור הדרך.
+לאחר הפעלת האפליקציה תראו אייקון מקלדת בשורת האייקונים העליונה. לחיצה עליו מאפשרת לשנות את קיצור הדרך.
 
-במידה וזה לא עובד, בדוק שהרשאת הנגישות פעילה — בשורה Accessibility צריך להופיע **Granted ✓**:
+במידה וזה לא עובד, בדקו שהרשאת הנגישות פעילה — בשורה Accessibility צריך להופיע **Granted ✓**:
 
 ![Accessibility Granted](docs/screenshot-6.png)
 
