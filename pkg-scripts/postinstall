@@ -5,5 +5,12 @@ APP="/Applications/SwitchBack.app"
 
 if [ -d "$APP" ]; then
     xattr -cr "$APP"
+
+    # Reset TCC only if the previous app was ad-hoc signed (not self-signed)
+    AUTHORITY=$(codesign -dv "$APP" 2>&1 | grep "Authority=" | head -1 || true)
+    if [[ "$AUTHORITY" != *"SwitchBack"* ]]; then
+        tccutil reset Accessibility com.switchback.app 2>/dev/null || true
+    fi
+
     open "$APP"
 fi

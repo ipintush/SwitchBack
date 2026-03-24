@@ -80,6 +80,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         loginItem.tag = 102
         menu.addItem(loginItem)
 
+        let switchLangItem = NSMenuItem(
+            title: "Switch Input Language on Conversion",
+            action: #selector(toggleSwitchInputLang),
+            keyEquivalent: ""
+        )
+        switchLangItem.target = self
+        switchLangItem.state = UserDefaults.standard.bool(forKey: "switchInputLanguageOnConversion") ? .on : .off
+        switchLangItem.tag = 103
+        menu.addItem(switchLangItem)
+
         menu.addItem(NSMenuItem.separator())
 
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
@@ -107,6 +117,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let item = statusItem?.menu?.item(withTag: 102) {
             item.state = LoginItemManager.shared.isEnabled ? .on : .off
         }
+        if let item = statusItem?.menu?.item(withTag: 103) {
+            item.state = UserDefaults.standard.bool(forKey: "switchInputLanguageOnConversion") ? .on : .off
+        }
+    }
+
+    @objc private func toggleSwitchInputLang() {
+        let newValue = !UserDefaults.standard.bool(forKey: "switchInputLanguageOnConversion")
+        UserDefaults.standard.set(newValue, forKey: "switchInputLanguageOnConversion")
+        statusItem?.menu?.item(withTag: 103)?.state = newValue ? .on : .off
     }
 
     @objc private func toggleLaunchOnLogin() {

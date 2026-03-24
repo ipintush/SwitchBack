@@ -49,6 +49,11 @@ enum ClipboardHelper {
             // Simulate Cmd+V to paste
             simulateKey(keyCode: UInt16(kVK_ANSI_V), flags: .maskCommand)
 
+            if UserDefaults.standard.bool(forKey: "switchInputLanguageOnConversion") {
+                let wasHebrew = TextConverter.isHebrew(text)
+                switchInputSource(toHebrew: !wasHebrew)
+            }
+
             // Restore original clipboard after paste settles
             let restoreWork = DispatchWorkItem {
                 pasteboard.clearContents()
@@ -67,6 +72,21 @@ enum ClipboardHelper {
             }
             Self.pendingRestore = restoreWork
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: restoreWork)
+        }
+    }
+
+    private static func switchInputSource(toHebrew: Bool) {
+        let targetLang = toHebrew ? "he" : "en"
+        guard let sources = TISCreateInputSourceList(nil, false)?
+            .takeRetainedValue() as? [TISInputSource] else { return }
+        for source in sources {
+            guard let ptr = TISGetInputSourceProperty(source, kTISPropertyInputSourceLanguages)
+            else { continue }
+            let langs = Unmanaged<CFArray>.fromOpaque(ptr).takeUnretainedValue() as [AnyObject]
+            if let first = langs.first as? String, first.hasPrefix(targetLang) {
+                TISSelectInputSource(source)
+                return
+            }
         }
     }
 

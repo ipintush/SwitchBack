@@ -39,10 +39,18 @@ cp "$BINARY"      "$MACOS/SwitchBack"
 cp "Info.plist"   "$CONTENTS/Info.plist"
 cp "AppIcon.icns" "$RESOURCES/AppIcon.icns"
 
-echo "Code signing (ad-hoc)..."
-codesign --force --deep \
-    --entitlements "$SCRIPT_DIR/entitlements.plist" \
-    --sign - "$APP_DIR"
+CERT_NAME="SwitchBack Dev"
+if security find-identity -v -p codesigning 2>/dev/null | grep -q "\"$CERT_NAME\""; then
+    echo "Code signing (self-signed: $CERT_NAME)..."
+    codesign --force --deep \
+        --entitlements "$SCRIPT_DIR/entitlements.plist" \
+        --sign "$CERT_NAME" "$APP_DIR"
+else
+    echo "Code signing (ad-hoc — run setup-cert.sh for persistent TCC)..."
+    codesign --force --deep \
+        --entitlements "$SCRIPT_DIR/entitlements.plist" \
+        --sign - "$APP_DIR"
+fi
 
 if [[ "$NO_LAUNCH" == false ]]; then
     echo "Done. Launching SwitchBack.app..."

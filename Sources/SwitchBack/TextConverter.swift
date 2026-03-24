@@ -18,12 +18,12 @@ struct TextConverter {
         return map
     }()
 
-    private static func containsHebrew(_ text: String) -> Bool {
+    static func isHebrew(_ text: String) -> Bool {
         text.unicodeScalars.contains { $0.value >= 0x05D0 && $0.value <= 0x05EA }
     }
 
     static func convert(_ text: String) -> String {
-        let toHebrew = !containsHebrew(text)
+        let toHebrew = !isHebrew(text)
         let map = toHebrew ? enToHe : heToEn
 
         return String(text.map { ch in

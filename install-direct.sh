@@ -24,4 +24,9 @@ mdimport "$DEST"
 
 echo ""
 echo "Done! Launching SwitchBack..."
+# Reset TCC only if the previous binary was ad-hoc signed (not self-signed)
+AUTHORITY=$(codesign -dv "$DEST" 2>&1 | grep "Authority=" | head -1 || true)
+if [[ "$AUTHORITY" != *"SwitchBack"* ]]; then
+    tccutil reset Accessibility com.switchback.app 2>/dev/null || true
+fi
 open "$DEST"
